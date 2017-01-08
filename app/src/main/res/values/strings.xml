@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Yonekubo</string>
+    <string name="dispositivos_encontrados">\nDispositivos Encontrados\n</string>
+    <string name="btn_encontrar_disposivicos">Encontrar Dispositivos</string>
+</resources>
