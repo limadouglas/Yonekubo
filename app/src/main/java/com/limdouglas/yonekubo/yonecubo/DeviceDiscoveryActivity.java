@@ -18,11 +18,12 @@ public class DeviceDiscoveryActivity extends ListActivity {
 
     ArrayAdapter<String> arrayAdapter;
     ButtonsRepository bancoDeDados;
+    private boolean existe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        existe = false;
         bancoDeDados = new ButtonsRepository(this);
 
         ListView lv = getListView();
@@ -39,6 +40,15 @@ public class DeviceDiscoveryActivity extends ListActivity {
 
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, intentFilter);
+        dispPareados();
+    }
+
+
+    public void dispPareados() {
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        for(BluetoothDevice btDevice : btAdapter.getBondedDevices()) {
+            arrayAdapter.add(btDevice.getName() + "\n" + btDevice.getAddress());
+        }
 
     }
 
@@ -48,8 +58,16 @@ public class DeviceDiscoveryActivity extends ListActivity {
         public void onReceive(Context context, Intent intent) {
             if(BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {
                 BluetoothDevice btDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                arrayAdapter.add(btDevice.getName() + "\n" + btDevice.getAddress());
+                for(BluetoothDevice btDevice2 : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
+                    if(btDevice.getAddress().equals(btDevice2.getAddress()))
+                        existe = true;
+                }
+                if(!existe)
+                    arrayAdapter.add(btDevice.getName() + "\n" + btDevice.getAddress());
+
+                existe = false;
             }
+
         }
     };
 

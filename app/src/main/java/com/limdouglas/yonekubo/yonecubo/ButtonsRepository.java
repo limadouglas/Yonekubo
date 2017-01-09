@@ -53,12 +53,14 @@ public class ButtonsRepository extends SQLiteOpenHelper {
         BotaoEstrutura btEstrutura;
         List<BotaoEstrutura> listBotao = new ArrayList<BotaoEstrutura>();
 
-        Cursor cursor = db.query("BOTAO", new String[]{"COMANDO", "NOME"}, null, null, null, null, null);
+        Cursor cursor = db.query("BOTAO", null, null, null, null, null, null);
 
         while(cursor.moveToNext()) {
             btEstrutura = new BotaoEstrutura();
+            btEstrutura.setId(cursor.getInt(cursor.getColumnIndex("_ID")));
             btEstrutura.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
             btEstrutura.setComando(cursor.getString(cursor.getColumnIndex("COMANDO")));
+
             listBotao.add(btEstrutura);
         }
 
@@ -69,6 +71,28 @@ public class ButtonsRepository extends SQLiteOpenHelper {
     }
 
 
+
+
+    public void editarBotao(int id, String nome, String comando) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("NOME", nome);
+        values.put("COMANDO", comando);
+        db.update("BOTAO", values, "_ID = ?", new String[]{String.valueOf(id)});
+        db.close();
+
+    }
+
+    public void excluirBotao(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("BOTAO", "_ID = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+
+
+
+
     public void setMAC(String mac){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -77,17 +101,23 @@ public class ButtonsRepository extends SQLiteOpenHelper {
 
         //gravando novo MAC.
         ContentValues values = new ContentValues();
+        values.put("COD_MAC", mac);
         db.insert("MAC", null, values);
         db.close();
     }
 
     public String getMAC(){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("MAC", new String[]{"COD_MAC"}, null, null, null, null, null);
-        cursor.moveToNext();
-        if(cursor != null)
-            return cursor.getString(cursor.getColumnIndex("COD_MAC"));
+        String result;
+        Cursor cursor = db.query("MAC", null, null, null, null, null, null);
+
+        if(cursor.moveToNext())
+            result = cursor.getString(cursor.getColumnIndex("COD_MAC"));
         else
-            return null;
+            result = null;
+
+        db.close();
+        cursor.close();
+        return result;
     }
 }

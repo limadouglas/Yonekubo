@@ -226,7 +226,7 @@ public class ConnectionThread extends Thread{
         try {
 
             running = false;
-            btServerSocket.close();
+            //btServerSocket.close();
             btSocket.close();
 
         } catch (IOException e) {
