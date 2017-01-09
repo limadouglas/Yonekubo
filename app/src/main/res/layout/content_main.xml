@@ -12,17 +12,19 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.limdouglas.yonekubo.yonecubo.MainActivity"
     tools:showIn="@layout/activity_main">
-    <TextView
-        android:id="@+id/view_static"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"/>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foregroundGravity="center"
-        />
+        android:padding="5dp"  />
+
+    <!-- textview é necessario por causa do snackbar ele necessita de uma view para funcionar -->
+    <TextView
+        android:id="@+id/view_static"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"/>
 
 </RelativeLayout>
