@@ -28,7 +28,6 @@ public class ConnectionThread extends Thread{
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */
     public ConnectionThread() {
-
         this.server = true;
     }
 
@@ -37,7 +36,6 @@ public class ConnectionThread extends Thread{
     Bluetooth para o qual deve ser solicitada uma conexão.
      */
     public ConnectionThread(String btDevAddress) {
-
         this.server = false;
         this.btDevAddress = btDevAddress;
     }
@@ -74,7 +72,6 @@ public class ConnectionThread extends Thread{
                 servidor pode ser liberado.
                  */
                 if(btSocket != null) {
-
                     btServerSocket.close();
                 }
 
