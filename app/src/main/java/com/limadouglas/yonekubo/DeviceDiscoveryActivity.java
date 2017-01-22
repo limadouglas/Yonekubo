@@ -40,11 +40,11 @@ public class DeviceDiscoveryActivity extends ListActivity {
 
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, intentFilter);
-        //dispPareados();
+        dispPareados();
     }
 
 
-    /*
+
     public void dispPareados() {
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         for(BluetoothDevice btDevice : btAdapter.getBondedDevices()) {
@@ -52,7 +52,7 @@ public class DeviceDiscoveryActivity extends ListActivity {
         }
 
     }
-    */
+
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
 
@@ -62,7 +62,7 @@ public class DeviceDiscoveryActivity extends ListActivity {
                 BluetoothDevice btDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 arrayAdapter.add(btDevice.getName() + "\n" + btDevice.getAddress());
 
-                /*
+
                 for(BluetoothDevice btDevice2 : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
                     if(btDevice.getAddress().equals(btDevice2.getAddress()))
                         existe = true;
@@ -72,7 +72,7 @@ public class DeviceDiscoveryActivity extends ListActivity {
                     arrayAdapter.add(btDevice.getName() + "\n" + btDevice.getAddress());
 
                 existe = false;
-                */
+
             }
 
         }
